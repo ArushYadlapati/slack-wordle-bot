@@ -6,5 +6,9 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "strict": true,
+    "jsx": "react"
   },
+  "ts-node": {
+    "esm": true
+  }
 }

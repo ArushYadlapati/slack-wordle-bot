@@ -17,4 +17,4 @@ You can start editing the API by modifying `api/index.ts` and learn more by taki
 
 ## Deploy on Vercel
 
-The easiest way to deploy your Hono app is to use the [Vercel Platform](https://vercel.com/templates?search=hono).
+The easiest way to deploy your Hono events is to use the [Vercel Platform](https://vercel.com/templates?search=hono).

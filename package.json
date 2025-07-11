@@ -1,13 +1,26 @@
 {
-  "type": "module", 
+  "name": "slack-wordle-api",
+  "version": "1.0.0",
+  "description": "Slack bot for Wordle game",
+  "main": "api/slack/events.ts",
   "scripts": {
-    "start": "vercel dev",
-    "deploy": "vercel"
+    "dev": "npx tsx api/slack/events.ts",
+    "build": "tsc",
+    "start": "npx tsx api/slack/events.ts"
   },
   "dependencies": {
-    "hono": "^4.4.2"
+    "@vercel/analytics": "^1.5.0",
+    "dotenv": "^17.1.0",
+    "hono": "^4.4.2",
+    "@slack/bolt": "^3.14.0",
+    "axios": "^1.6.0"
   },
   "devDependencies": {
-    "vercel": "^32.4.1"
+    "@types/node": "^20.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
