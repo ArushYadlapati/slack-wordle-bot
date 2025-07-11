@@ -50,13 +50,13 @@ export default async (req: VercelRequest, res: VercelResponse) => {
             return res.status(200).send(event.challenge);
         }
 
-        // const body = typeof req.body === 'string' ? req.body : JSON.stringify(req.body);
-        // const signature = req.headers['x-slack-signature'] as string;
-        // const timestamp = req.headers['x-slack-request-timestamp'] as string;
+        const body = typeof req.body === 'string' ? req.body : JSON.stringify(req.body);
+        const signature = req.headers['x-slack-signature'] as string;
+        const timestamp = req.headers['x-slack-request-timestamp'] as string;
 
-        // if (!verifySlackSignature(body, signature, timestamp)) {
-        //     return res.status(401).json({ error: 'Invalid signature' });
-        // }
+        if (!verifySlackSignature(body, signature, timestamp)) {
+            return res.status(401).json({ error: 'Invalid signature' });
+        }
 
         if (event.type === 'event_callback' && event.event.type === 'message') {
             const message = event.event;
