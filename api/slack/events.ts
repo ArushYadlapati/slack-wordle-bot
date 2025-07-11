@@ -1,8 +1,11 @@
 import { App, ExpressReceiver } from '@slack/bolt';
 import axios from 'axios';
 import dotenv from 'dotenv';
-dotenv.config({ path: './.env' });
-// 
+dotenv.config({
+    path: './.env'
+});
+
+
 const SIGNING_SECRET = process.env.SLACK_SIGNING_SECRET!;
 const BOT_TOKEN = process.env.SLACK_BOT_TOKEN!;
 
