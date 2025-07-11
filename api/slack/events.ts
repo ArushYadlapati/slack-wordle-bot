@@ -1,42 +1,27 @@
-import { App, ExpressReceiver } from '@slack/bolt';
-import axios from 'axios';
 import dotenv from 'dotenv';
 dotenv.config({
     path: './.env'
 });
+import axios from 'axios';
+import { App } from '@slack/bolt';
 
 
-const SIGNING_SECRET = process.env.SLACK_SIGNING_SECRET!;
-const BOT_TOKEN = process.env.SLACK_BOT_TOKEN!;
-
-const receiver = new ExpressReceiver({
-    signingSecret: SIGNING_SECRET,
-    processBeforeResponse: true,
-});
+const signingSecret: string = process.env['SLACK_SIGNING_SECRET'] as string;
+const botToken: string = process.env['SLACK_BOT_TOKEN'] as string;
 
 const app = new App({
-    token: BOT_TOKEN,
-    receiver,
+    signingSecret: signingSecret,
+    token: botToken,
 });
 
-app.message('quote', async ({ message, say }) => {
-    if ("user" in message) {
-        try {
-            const resp = await axios.get('https://api.quotable.io/random');
-            const quote = resp.data.content;
-            await say(`Hello, <@${message.user}>, ${quote}`);
-        } catch (error) {
-            console.error("Error fetching quote:", error);
-            await say("Sorry, I couldn't fetch a quote right now.");
-        }
-    }
-});
+(async () => {
+    await app.start(process.env.PORT || 12000);
 
-module.exports = receiver.app;
-
-if (require.main === module) {
-    const port = process.env.PORT || 3001;
-    receiver.app.listen(port, () => {
-        console.log(`⚡️ Bolt app is running on port ${port}!`);
+    app.message('quote', async ({ message, say }) => {
+        const resp = await axios.get(`https://api.quotable.io/random`);
+        const quote: string = resp.data.content;
+        await say(`Hello, <@${message}>, ${quote}`);
     });
-}
+
+    console.log(`⚡️ Bolt app is running!`);
+})();
