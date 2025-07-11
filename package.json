@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "npx tsx api/slack/events.ts",
     "build": "tsc",
-    "start": "npx tsx api/slack/events.ts"
+    "start": "cd ./ && npx tsx api/slack/events.ts"
   },
   "dependencies": {
     "@vercel/analytics": "^1.5.0",

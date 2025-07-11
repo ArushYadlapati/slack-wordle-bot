@@ -1,17 +1,18 @@
 import { App, ExpressReceiver } from '@slack/bolt';
 import axios from 'axios';
+import dotenv from 'dotenv';
+dotenv.config({ path: './.env' });
 
-const signingSecret = "7ffc0286a42b75edec744eb60f9814b6";
-const botToken = "xoxb-2210535565-9165205323462-LftSZY0vWxxMopDHZ9DLA8vJ";
+const SIGNING_SECRET = process.env.SLACK_SIGNING_SECRET!;
+const BOT_TOKEN = process.env.SLACK_BOT_TOKEN!;
 
-// Create a custom receiver for Vercel
 const receiver = new ExpressReceiver({
-    signingSecret,
+    signingSecret: SIGNING_SECRET,
     processBeforeResponse: true,
 });
 
 const app = new App({
-    token: botToken,
+    token: BOT_TOKEN,
     receiver,
 });
 
@@ -28,12 +29,10 @@ app.message('quote', async ({ message, say }) => {
     }
 });
 
-// Export the Express app for Vercel
 module.exports = receiver.app;
 
-// Start the server locally (only when running directly, not in Vercel)
 if (require.main === module) {
-    const port = process.env.PORT || 3003;
+    const port = process.env.PORT || 3001;
     receiver.app.listen(port, () => {
         console.log(`⚡️ Bolt app is running on port ${port}!`);
     });
